@@ -29,9 +29,10 @@ body{font-family:'Fredoka',system-ui,-apple-system,'Segoe UI',sans-serif;
 #confetti{position:fixed;inset:0;z-index:900;pointer-events:none}
 
 .screen{position:fixed;inset:0;z-index:5;display:none;flex-direction:column;
-  align-items:center;justify-content:center;
+  align-items:center;justify-content:center;justify-content:safe center;
   padding:calc(58px + env(safe-area-inset-top)) 20px calc(58px + env(safe-area-inset-bottom));
   text-align:center;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.screen::before,.screen::after{content:"";flex:0 0 auto;margin:auto}
 .screen.active{display:flex;animation:fadeIn .6s ease both}
 @keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
@@ -220,15 +221,15 @@ p.sub{color:var(--muted);font-size:clamp(15px,4vw,18px);max-width:34ch;margin:0 
   border:1px solid var(--line);backdrop-filter:blur(8px)}
 
 /* gallery */
-.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;width:min(620px,100%);margin-bottom:22px}
-.polaroid{background:#fdfaf6;padding:10px 10px 32px;border-radius:6px;
-  box-shadow:0 12px 30px rgba(0,0,0,.4);cursor:pointer;transform:rotate(var(--r));transition:transform .25s}
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;width:min(560px,100%);margin-bottom:22px}
+.polaroid{background:#fdfaf6;padding:8px 8px 26px;border-radius:6px;
+  box-shadow:0 10px 26px rgba(0,0,0,.4);cursor:pointer;transform:rotate(var(--r));transition:transform .25s}
 .polaroid:active{transform:rotate(0) scale(1.03)}
 .photo{width:100%;aspect-ratio:1/1;border-radius:3px;overflow:hidden;display:flex;
   align-items:center;justify-content:center;font-size:34px;
   background:linear-gradient(135deg,var(--p1),var(--p2))}
 .photo img{width:100%;height:100%;object-fit:cover;display:block}
-.cap{font-family:'Caveat',cursive;color:#3a2b3f;font-size:19px;margin-top:8px;line-height:1}
+.cap{font-family:'Caveat',cursive;color:#3a2b3f;font-size:18px;margin-top:7px;line-height:1}
 .lightbox{position:fixed;inset:0;z-index:960;background:rgba(10,4,18,.93);display:none;
   align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(6px)}
 .lightbox.show{display:flex}
@@ -249,6 +250,65 @@ p.sub{color:var(--muted);font-size:clamp(15px,4vw,18px);max-width:34ch;margin:0 
 @keyframes blink{50%{opacity:0}}
 .float{position:fixed;bottom:-40px;font-size:22px;z-index:8;pointer-events:none;animation:up linear forwards}
 @keyframes up{to{transform:translateY(-110vh) rotate(40deg);opacity:0}}
+
+/* ---------- responsive ---------- */
+.lightbox>div{width:min(480px,92vw)}
+
+/* tablets / desktop */
+@media (min-width:760px){
+  .screen{padding:calc(70px + env(safe-area-inset-top)) 32px calc(70px + env(safe-area-inset-bottom))}
+  .gallery{grid-template-columns:repeat(3,1fr);width:min(780px,100%);gap:18px}
+  .polaroid{padding:10px 10px 30px}
+  .cap{font-size:20px}
+  .cards{grid-template-columns:repeat(3,1fr);width:min(740px,100%);gap:16px}
+  .fc-face{font-size:16px}
+  .scratch{width:min(480px,100%);height:clamp(300px,48vh,420px)}
+  .scr-under{padding:34px 32px;font-size:19px}
+  .letter{width:min(640px,100%);height:clamp(260px,48vh,440px);padding:30px 32px}
+  .sheet{bottom:40px;width:min(520px,calc(100% - 40px));padding:26px 26px 22px}
+  .sheet .msg{font-size:20px}
+  .cake{width:300px}
+  .candle{width:12px;height:54px}
+  .balloon{width:calc(var(--w) * 1.45)}
+  .jbubble{width:250px;font-size:15px}
+  p.sub{max-width:44ch}
+  #music{top:20px;right:22px}
+  .lightbox>div{width:min(560px,90vw)}
+}
+
+/* large desktop */
+@media (min-width:1200px){
+  .gallery{width:min(900px,100%)}
+  .cards{width:min(840px,100%)}
+  .balloon{width:calc(var(--w) * 1.7)}
+}
+
+/* small phones */
+@media (max-width:360px){
+  .gallery,.cards{gap:9px}
+  .polaroid{padding:6px 6px 22px}
+  .cap{font-size:16px}
+  .fc-face{font-size:13px;padding:10px}
+  .btn{padding:14px 24px;font-size:16px}
+  .sheet{padding:20px 18px 16px}
+  .sheet .msg{font-size:17px}
+}
+
+/* short / landscape screens */
+@media (max-height:560px){
+  .screen{padding-top:calc(46px + env(safe-area-inset-top));padding-bottom:46px}
+  .gift{margin-top:150px}
+  .cake{width:190px}
+  .letter{height:clamp(150px,52vh,300px)}
+  .scratch{height:clamp(190px,58vh,300px)}
+  h2{font-size:22px;margin-bottom:6px}
+  p.sub{margin-bottom:16px;font-size:14px}
+}
+
+/* respect reduced-motion preferences */
+@media (prefers-reduced-motion:reduce){
+  .star,.bell,.jpup,.jtongue,.jwob{animation:none !important}
+}
 </style>
 </head>
 <body>
